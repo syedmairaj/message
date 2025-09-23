@@ -27,7 +27,7 @@ public class SecurityConfig {
 
     private String[] OPEN_URLS = {
             "/api/v1/message/register",
-            "/api/v1/message/login"
+            "/api/v1/message/login",
         "/",
         "/index.html",
         "/css/**",
