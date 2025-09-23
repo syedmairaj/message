@@ -106,7 +106,26 @@ loginForm.addEventListener("submit", (e) => {
       console.log("Response from backend:", data); // <-- check response
       if (data.status === 200) {
         localStorage.setItem("jwtToken", data.data);
-        window.location.href = "welcome.html";
+        // decode JWT to extract role
+        function parseJwt(token) {
+          try {
+            return JSON.parse(atob(token.split(".")[1]));
+          } catch (e) {
+            console.error("Invalid JWT", e);
+            return null;
+          }
+        }
+        const decoded = parseJwt(data.data);
+        console.log("decoded JWT", decoded);
+
+        //Redirect based on role
+        if (decoded && decoded.role === "ROLE_ADMIN") {
+          window.location.href = "admin.html";
+        } else if (decoded && decoded.role === "ROLE_USER") {
+          window.location.href = "user.html";
+        } else {
+          window.location.href = "welcome.html";
+        }
       } else if (data.status === 401) {
         alert("Invalid Credentials");
       } else {

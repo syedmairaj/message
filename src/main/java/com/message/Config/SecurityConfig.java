@@ -36,15 +36,21 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> {})
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(OPEN_URLS).permitAll().anyRequest().authenticated()
+                        // Public endpoints
+                        .requestMatchers(OPEN_URLS).permitAll()
 
-                ).authenticationProvider(authProvider()).addFilterBefore
-                        (jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                        // Admin-only page
+                        .requestMatchers("/admin.html").hasRole("ADMIN")
 
-//        http.csrf().disable().cors().disable();
-//        http.authorizeHttpRequests().anyRequest().permitAll();
-     return http.build();
+                        // Everything else requires authentication
+                        .anyRequest().authenticated()
+                )
+                .authenticationProvider(authProvider())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
+
 
 
 //------------spring security username and password verification-------------------

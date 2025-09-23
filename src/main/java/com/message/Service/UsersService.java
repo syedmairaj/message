@@ -90,7 +90,7 @@ public class UsersService {
         }
 
         //generate JWT token after successful login
-        String role = "ROLE_ADMIN";
+        String role = dBData.getRole();
         String token =jwtService.generateToken(dBData.getEmail(),role);
 
         response.setMessage("Successfully Login");
