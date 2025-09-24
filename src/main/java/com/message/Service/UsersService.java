@@ -59,7 +59,7 @@ public class UsersService {
         BeanUtils.copyProperties(dto,users);
 //        Users signUp_Data = mapper.map(dto, Users.class);
         users.setPassword(hashpassword);
-        users.setRole("ROLE_ADMIN");
+        users.setRole("ROLE_USER");
         Users saved_data = usersRepository.save(users);
         Dto dtodata = mapper.map(saved_data, Dto.class);
         response.setMessage("signUp done");
