@@ -1,9 +1,9 @@
 FROM openjdk:17
 
-COPY target/message.jar /usr/app/
+COPY target/myapp.jar /app/myapp.jar
 
-WORKDIR /usr/app
+WORKDIR /app
 
 EXPOSE 9090
 
-ENTRYPOINT ["java", "-jar", "message.jar"]
+ENTRYPOINT ["java", "-jar", "myapp.jar"]
